@@ -2,4 +2,15 @@
     ViewBag.Title = "Index";
 }
 
+@model IEnumerable<string>
+
 <h2>Index</h2>
+
+
+@foreach (var item in Model)
+{
+    <p>
+        @Html.ActionLink(item, "list", item)
+    </p>
+}
+
