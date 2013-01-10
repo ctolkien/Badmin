@@ -22,6 +22,34 @@ namespace Badmin
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            System.Data.Entity.Database.SetInitializer(new DatabaseInit());
+
         }
     }
+
+    public class DatabaseInit : System.Data.Entity.DropCreateDatabaseIfModelChanges<Models.Data.DatabaseContext>
+    {
+        protected override void Seed(Models.Data.DatabaseContext context)
+        {
+            context.Forums.Add(new Models.Forum
+            {
+                Name = "Sample Forum 1"
+            });
+            context.Forums.Add(new Models.Forum
+            {
+                Name = "Sample Forum 2"
+            });
+
+            context.SaveChanges();
+
+
+            base.Seed(context);
+        }
+    
+	
+
+
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿using Badmin.Models.Data;
+﻿using Badmin;
+using Badmin.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,22 +9,22 @@ using System.Web.Mvc;
 
 namespace Badmin.Areas.Admin.Controllers
 {
-    public class DashboardController : BadminBaseController<DatabaseContext>
+    public class DashboardController : BadminBaseController
     {
 
-        public DashboardController() : base(new DatabaseContext())
+        public DashboardController(IBadmin badmin) : base(badmin)
         {
-
+            
         }
-
+        
         // GET: /Admin/Dashboard/
 
         public ActionResult Index()
         {
 
-            var foo = base.GetListOfTables();
+            var model = badmin.DataConfigurations.Where(x => x.VisibleInMenu);
 
-            return View(foo);
+            return View(model.Select(x => x.Name));
         }
 
     }

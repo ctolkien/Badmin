@@ -4,45 +4,62 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace Badmin.Badmin
+namespace Badmin
 {
-    public class Badmin<T> where T : class
+
+
+    public class Badmin : IBadmin
     {
+
 
         public Badmin()
         {
             DataConfigurations = new List<DataConfiguration>();
         }
 
+        //public ICollection<DataConfiguration<object>> DataConfigurations { get; private set; }
 
-        public ICollection<DataConfiguration> DataConfigurations { get; set; }
+        public ICollection<DataConfiguration> DataConfigurations { get; private set; }
 
-
-
-        public BadminConfiguration Register<TResult>(Func<T, IQueryable<TResult>> data) where TResult : class
+        public DataConfiguration Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class
         {
 
-            var dataContext = this.CreateDataContextType();
+            var dataContext = this.CreateDataContextType<T>();
 
             var invokedData = data.Invoke(dataContext);
 
+
             var dataConfiguration = new DataConfiguration
             {
-                Data = invokedData
+                Data = invokedData,
+                Name = GetTypeName(invokedData.ElementType.FullName),
+                Type = typeof(TResult)
             };
+
 
             DataConfigurations.Add(dataConfiguration);
 
-            return new BadminConfiguration(dataConfiguration);
+        
+
+            return dataConfiguration;
 
         }
 
-        public T CreateDataContextType()
+
+        public T CreateDataContextType<T>() where T: class
         {
             var dataContext = typeof(T).GetConstructor(System.Type.EmptyTypes).Invoke(null);
 
             return dataContext as T;
 
+        }
+
+        private string GetTypeName(string fullName)
+        {
+            if (!fullName.Contains('.'))
+                return fullName;
+
+            return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
 
 
