@@ -129,6 +129,9 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListController.cs" />
     <Compile Include="Badmin\Badmin.cs" />
+    <Compile Include="Badmin\BadminConfiguration.cs" />
+    <Compile Include="Badmin\BadminExtensions.cs" />
+    <Compile Include="Badmin\DataConfiguration.cs" />
     <Compile Include="Models\Data\DatabaseContext.cs" />
     <Compile Include="Models\Forum.cs" />
     <Compile Include="Global.asax.cs">
