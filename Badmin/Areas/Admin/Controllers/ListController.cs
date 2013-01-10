@@ -25,15 +25,15 @@ namespace Badmin.Areas.Admin.Controllers
 
             const int pageSize = 2;
 
-            int skip = (int)((page - 1) * pageSize);
+            int skip = ((page - 1) * pageSize);
 
             
-            var orderedData = dataConfig.Data.ToList();
+            //hack: code is broken here...
 
-            var property = orderedData
-                            .Skip(skip)
-                            .Take(pageSize);
+            dynamic orderedData = dataConfig.Data.Cast<IHasId>();
 
+            var property = orderedData.Skip(skip).Take(pageSize);
+    
 
             return View(property);
         }

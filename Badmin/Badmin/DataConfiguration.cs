@@ -15,7 +15,7 @@ namespace Badmin
 
         public bool VisibleInMenu { get; set; }
 
-        public IQueryable<object> Data { get; set; }
+        public IQueryable Data { get; set; }
 
         
     }

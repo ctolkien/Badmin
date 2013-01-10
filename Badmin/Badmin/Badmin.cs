@@ -6,18 +6,13 @@ using System.Web;
 
 namespace Badmin
 {
-
-
     public class Badmin : IBadmin
     {
-
 
         public Badmin()
         {
             DataConfigurations = new List<DataConfiguration>();
         }
-
-        //public ICollection<DataConfiguration<object>> DataConfigurations { get; private set; }
 
         public ICollection<DataConfiguration> DataConfigurations { get; private set; }
 
@@ -39,8 +34,6 @@ namespace Badmin
 
             DataConfigurations.Add(dataConfiguration);
 
-        
-
             return dataConfiguration;
 
         }
@@ -61,9 +54,6 @@ namespace Badmin
 
             return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
-
-
-
 
     }
 }
