@@ -21,7 +21,7 @@ namespace Badmin
 
         public ICollection<DataConfiguration> DataConfigurations { get; private set; }
 
-        public DataConfiguration Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class
+        public DataConfiguration Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class where T : class
         {
 
             var dataContext = this.CreateDataContextType<T>();
@@ -33,7 +33,7 @@ namespace Badmin
             {
                 Data = invokedData,
                 Name = GetTypeName(invokedData.ElementType.FullName),
-                Type = typeof(TResult)
+                
             };
 
 

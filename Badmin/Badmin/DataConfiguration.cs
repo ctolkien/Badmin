@@ -1,3 +1,4 @@
+
 using System;
 using System.Linq;
 
@@ -14,13 +15,8 @@ namespace Badmin
 
         public bool VisibleInMenu { get; set; }
 
-        public IQueryable Data { get; set; }
+        public IQueryable<object> Data { get; set; }
 
-        public IQueryable<T> GetDataAsIQueryable<T>()
-        {
-            return Data as IQueryable<T>;
-        }
-
-        public Type Type { get; set; }
+        
     }
 }

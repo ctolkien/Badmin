@@ -133,7 +133,7 @@ namespace Badmin.Tests
             var dataConfiguration = badmin.DataConfigurations.Single(x => x.Name == "Dummy");
 
 
-            Assert.Equal(1, dataConfiguration.GetDataAsIQueryable<Dummy>().Count());
+            Assert.Equal(1, dataConfiguration.Data.Count());
 
 
 

@@ -18,21 +18,21 @@ namespace Badmin.Areas.Admin.Controllers
         //
         // GET: /Admin/List/
 
-        public ActionResult Index(string id)
+        public ActionResult Index(string id, int page =1)
         {
 
             var dataConfig = badmin.DataConfigurations.SingleOrDefault(x => x.Name == id);
 
-            var property = dataConfig.Data;
+            const int pageSize = 2;
 
+            int skip = (int)((page - 1) * pageSize);
 
             
-            
-            //var property = badmin.DataConfigurations.SingleOrDefault(x => x.Name == id).Data.Cast<IEnumerable;
+            var orderedData = dataConfig.Data.ToList();
 
-            //var property = typeof(DatabaseContext).GetProperties().Where(x => x.Name == property).First();
-
-            //r things = base.dataContext
+            var property = orderedData
+                            .Skip(skip)
+                            .Take(pageSize);
 
 
             return View(property);

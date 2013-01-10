@@ -41,6 +41,10 @@ local.properties
 *.user
 *.sln.docstates
 
+Badmin/App_Data/*.mdf
+Badmin/App_Data/*.ldf
+Badmin/*.ncrunch*
+
 # Build results
 [Dd]ebug/
 [Rr]elease/

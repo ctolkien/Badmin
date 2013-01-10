@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using StackExchange.Profiling;
+<!DOCTYPE html>
 <html>
 <head>
+    @this.InitClientTimings()
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
@@ -102,5 +104,8 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
 
     @RenderSection("scripts", required: false)
+
+
+    @MiniProfiler.RenderIncludes()
 </body>
 </html>
