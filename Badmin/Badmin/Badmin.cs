@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace Badmin
 {
@@ -11,12 +10,14 @@ namespace Badmin
 
         public Badmin()
         {
-            DataConfigurations = new List<DataConfiguration>();
+            DataConfigurations = new List<DataConfiguration<object>>();
         }
 
-        public ICollection<DataConfiguration> DataConfigurations { get; private set; }
+        public ICollection<DataConfiguration<object>> DataConfigurations { get; private set; }
 
-        public DataConfiguration Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class where T : class
+        public DataConfiguration<object> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
+            where TResult : class
+            where T : class
         {
 
             var dataContext = this.CreateDataContextType<T>();
@@ -24,7 +25,7 @@ namespace Badmin
             var invokedData = data.Invoke(dataContext);
 
 
-            var dataConfiguration = new DataConfiguration
+            var dataConfiguration = new DataConfiguration<object>
             {
                 Data = invokedData,
                 Name = GetTypeName(invokedData.ElementType.FullName),

@@ -1,9 +1,6 @@
-﻿using Badmin;
-using Badmin.Models.Data;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Badmin.Areas.Admin.Controllers
@@ -23,16 +20,21 @@ namespace Badmin.Areas.Admin.Controllers
 
             var dataConfig = badmin.DataConfigurations.SingleOrDefault(x => x.Name == id);
 
-            const int pageSize = 2;
+            const int PageSize = 2;
 
-            int skip = ((page - 1) * pageSize);
+            int skip = ((page - 1) * PageSize);
 
             
             //hack: code is broken here...
 
-            dynamic orderedData = dataConfig.Data.Cast<IHasId>();
+            IQueryable<object> orderedData = dataConfig.Data;
 
-            var property = orderedData.Skip(skip).Take(pageSize);
+            //can't cast it to IHasId
+            //it's all goen to hell...
+            var property = orderedData
+                .OrderBy(x => x)
+                .Skip(skip).Take(PageSize)
+                .ToList();
     
 
             return View(property);

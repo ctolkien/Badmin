@@ -12,13 +12,13 @@ namespace Badmin
 {
     public static class BadminExtensions
     {
-        public static DataConfiguration Name(this DataConfiguration config, string name) 
+        public static DataConfiguration<T> Name<T>(this DataConfiguration<T> config, string name) 
         {
             config.Name = name;
             return config;
         }
 
-        public static DataConfiguration VisibleInMenu(this DataConfiguration config, bool visibleInMenu) 
+        public static DataConfiguration<T> VisibleInMenu<T>(this DataConfiguration<T> config, bool visibleInMenu) 
         {
             config.VisibleInMenu = visibleInMenu;
             return config;
