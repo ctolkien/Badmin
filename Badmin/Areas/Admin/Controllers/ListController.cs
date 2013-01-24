@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Badmin.Areas.Admin.Controllers
 {
@@ -28,8 +29,9 @@ namespace Badmin.Areas.Admin.Controllers
             var dataContext = Badmin.CreateDataCotext(config);
 
             var set = dataContext.Set(config.Data.ElementType);
-
+            
             //kill me now..
+            //this pulls all the data back, is not paging appropriately...
             var objectlist = new List<object>();
             foreach (var item in set)
             {
