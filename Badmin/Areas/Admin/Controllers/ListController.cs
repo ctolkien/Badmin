@@ -29,9 +29,14 @@ namespace Badmin.Areas.Admin.Controllers
 
             var set = dataContext.Set(config.Data.ElementType);
 
-            
-            
-            var list = set.Cast<object>().ToPagedList(page, PageSize);
+            //kill me now..
+            var objectlist = new List<object>();
+            foreach (var item in set)
+            {
+                objectlist.Add(item);
+            }
+
+            var list = objectlist.ToPagedList(page, PageSize);
 
 
             return View(list);
