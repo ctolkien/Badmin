@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-@model IEnumerable<object>
+@model IPagedList<object>
 
 
 <h2>Row Listing</h2>
@@ -12,7 +12,7 @@
     <caption></caption>
     <thead>
         <tr>
-            @foreach (var property in Model.VisibleProperties())
+            @foreach (var property in Model.First().VisibleProperties())
             {
                 <th>
                     @property.GetLabel().ToSeparatedWords()
@@ -41,11 +41,11 @@
                     <ul class="dropdown-menu">
                         @{
                             @Html.TryPartial("_actions", model)                            
-                            var routevalues = model.GetIdValue();  
-                            <li>@Html.ActionLink("Edit", "Edit", routevalues)</li>
-                            <li>@Html.ActionLink("Details", "Details", routevalues)</li>
+                            var routevalues = model.GetIdAndTypeValue("type");
+                            <li>@Html.ActionLink("Edit", "edit", routevalues)</li>
+                            <li>@Html.ActionLink("Details", "details", routevalues)</li>
                             <li class="divider"></li>
-                            <li>@Html.ActionLink("Delete", "Delete", routevalues)</li>
+                            <li>@Html.ActionLink("Delete", "delete", routevalues)</li>
                                
                         }
                     </ul>
@@ -58,4 +58,4 @@
 
 </table>
 
-@Html.Pager((int)ViewBag.CurrentPage, (int)ViewBag.TotalPages, x => Url.Action("index", new { id = "Forum", page =x}))
+@Html.Pager(Model.PageIndex, Model.TotalPages, x => Url.Action("index", new { type = Model.First().GetTypeName() , page =x}))

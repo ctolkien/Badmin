@@ -17,8 +17,8 @@ namespace Badmin.Areas.admin
 
             context.MapRoute(
                 "Admin_List",
-                "admin/{id}/{controller}",
-                new { action="index"  }
+                "admin/{type}/{controller}/{action}/{id}",
+                new { action="index", id = UrlParameter.Optional  }
                 );
 
             context.MapRoute(

@@ -16,19 +16,15 @@ namespace Badmin.Areas.Admin.Controllers
         //
         // GET: /Admin/List/
 
-        public ActionResult Index(string id, int page =1)
+        public ActionResult Index(string type, int page =1)
         {
             const int PageSize = 2;
 
-            var dataConfig = badmin.Configurations.SingleOrDefault(x => x.Name == id);
+            var dataConfig = badmin.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
 
-            var totalCount = dataConfig.Data.Count();
-
-            var property = dataConfig.Data.ToPagedList(page, PageSize).ToList();
+            var property = dataConfig.Data.ToPagedList(page, PageSize);
 
 
-            ViewBag.CurrentPage = page -1;
-            ViewBag.TotalPages = (totalCount / PageSize);
 
             return View(property);
         }

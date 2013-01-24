@@ -146,6 +146,18 @@ namespace Badmin
             return v;
         }
 
+        public static RouteValueDictionary GetIdAndTypeValue(this object model, string type)
+        {
+            var v = model.GetIdValue();
+            v.Add(type, GetTypeName(model));
+            return v;
+        }
+
+        public static string GetTypeName(this object model)
+        {
+            return model.GetType().Name.ToLower();
+        }
+
         public static object GetId(this object model)
         {
             return model.GetType().GetProperty(model.IdentifierPropertyName()).GetValue(model, new object[0]);
@@ -177,7 +189,7 @@ namespace Badmin
 
         public static string GetLabel(this PropertyInfo propertyInfo)
         {
-            //return "foo!";
+            
             try
             {
                 var meta = ModelMetadataProviders.Current.GetMetadataForProperty(null, propertyInfo.DeclaringType, propertyInfo.Name);

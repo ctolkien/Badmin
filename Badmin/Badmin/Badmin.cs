@@ -29,7 +29,7 @@ namespace Badmin
             var dataConfiguration = new DataConfiguration<object>
             {
                 Data = invokedData,
-                Name = GetTypeName(invokedData.ElementType.FullName)
+                Name = typeof(TResult).Name
                 
             };
 
@@ -48,14 +48,6 @@ namespace Badmin
 
             return dataContext as T;
 
-        }
-
-        private string GetTypeName(string fullName)
-        {
-            if (!fullName.Contains('.'))
-                return fullName;
-
-            return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
 
     }
