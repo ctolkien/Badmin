@@ -14,6 +14,13 @@ namespace Badmin.Areas.admin
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+
+            context.MapRoute(
+                "Admin_List",
+                "admin/{type}/{controller}/{action}/{id}",
+                new { action="index", id = UrlParameter.Optional  }
+                );
+
             context.MapRoute(
                 "Admin_default",
                 "admin/{controller}/{action}/{id}",

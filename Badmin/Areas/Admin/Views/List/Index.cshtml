@@ -1,0 +1,61 @@
+﻿@using Badmin;
+@{
+    ViewBag.Title = "Index";
+}
+
+@model IPagedList<object>
+
+
+<h2>Row Listing</h2>
+
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            @foreach (var property in Model.First().VisibleProperties())
+            {
+                <th>
+                    @property.GetLabel().ToSeparatedWords()
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    @{ int index = 0; }
+    @foreach (var model in Model)
+    {
+        ViewData[index.ToString()] = model;
+        <tr>
+            @foreach (var property in model.VisibleProperties())
+            {
+                <td>
+                    @Html.Display(index + "." + property.Name)
+                </td>                    
+            }
+            <td>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        Action
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @{
+                            @Html.TryPartial("_actions", model)                            
+                            var routevalues = model.GetIdAndTypeValue("type");
+                            <li>@Html.ActionLink("Edit", "edit", routevalues)</li>
+                            <li>@Html.ActionLink("Details", "details", routevalues)</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Delete", "delete", routevalues)</li>
+                               
+                        }
+                    </ul>
+                </div>
+
+            </td>
+        </tr>
+            index++;
+    }
+
+</table>
+
+@Html.Pager(Model.PageIndex, Model.TotalPages, x => Url.Action("index", new { type = Model.First().GetTypeName() , page =x}))
