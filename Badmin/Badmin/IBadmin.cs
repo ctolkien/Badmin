@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Badmin
 {
@@ -7,10 +9,9 @@ namespace Badmin
      
     {
         T CreateDataContextType<T>() where T: class;
-        ICollection<DataConfiguration<object>> Configurations { get; } 
+        ICollection<DataConfiguration<object>> Configurations { get; }
 
-        DataConfiguration<object> Register<T, TResult>(Func<T, System.Linq.IQueryable<TResult>> data)
-            where TResult : class
-            where T : class;
+        DataConfiguration<object> Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class where T: DbContext;
+
     }
 }

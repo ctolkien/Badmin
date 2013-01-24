@@ -17,7 +17,9 @@ namespace Badmin
 
         public IQueryable<T> Data { get; set; }
 
-        //public T DataType { get; set; }
+        public Type DataType { get; set; }
+
+        public Type DataContextType { get; set; }
 
         
     }

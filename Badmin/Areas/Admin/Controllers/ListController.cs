@@ -29,5 +29,39 @@ namespace Badmin.Areas.Admin.Controllers
             return View(property);
         }
 
+        public ActionResult Edit(string type, int id)
+        {
+
+            //ugly, fix trhis
+            var data = badmin.Configurations.Single(x => x.Name.ToUpper() == type.ToUpper());
+
+            var dataContext = Badmin.CreateDataCotext(data);
+
+            var item = dataContext.Set(data.DataType).Find(id);
+            
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string type, int id, FormCollection forms)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = badmin.Configurations.Single(x => x.Name.ToUpper() == type.ToUpper());
+
+            var dataContext = Badmin.CreateDataCotext(data);
+            
+            var item = dataContext.Set(data.DataType).Find(id) as dynamic;
+            
+            UpdateModel(item);
+
+            dataContext.SaveChanges();
+
+
+            return RedirectToAction("index", new { type = type });
+
+        }
+
     }
 }
