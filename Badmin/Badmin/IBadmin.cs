@@ -13,5 +13,7 @@ namespace Badmin
 
         DataConfiguration<object> Register<T, TResult>(Func<T, IQueryable<TResult>> data) where TResult : class where T: DbContext;
 
+        DataConfiguration<object> GetDataConfigurationForType<TType>(string type) where TType: class;
+
     }
 }

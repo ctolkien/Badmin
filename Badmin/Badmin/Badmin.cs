@@ -16,9 +16,15 @@ namespace Badmin
         }
 
 
-        public static DbContext CreateDataCotext(DataConfiguration<object> dataConfig)
+        public static DbContext CreateDataCotext<T>(DataConfiguration<T> dataConfig)
         {
             return dataConfig.DataContextType.GetConstructor(System.Type.EmptyTypes).Invoke(null) as DbContext;
+        }
+
+        public DataConfiguration<object> GetDataConfigurationForType<TType>(string type) where TType: class
+        {
+            return this.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
+
         }
 
         public ICollection<DataConfiguration<object>> Configurations { get; private set; }
@@ -36,7 +42,6 @@ namespace Badmin
             {
                 Data = invokedData,
                 Name = typeof(TResult).Name,
-                DataType = typeof(TResult),
                 DataContextType = typeof(T)
                 
             };

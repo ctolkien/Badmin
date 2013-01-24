@@ -30,6 +30,8 @@ namespace Badmin
 
     public class DatabaseInit : System.Data.Entity.DropCreateDatabaseIfModelChanges<Models.Data.DatabaseContext>
     {
+        
+
         protected override void Seed(Models.Data.DatabaseContext context)
         {
             context.Forums.Add(new Models.Forum

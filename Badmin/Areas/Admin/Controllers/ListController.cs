@@ -9,6 +9,8 @@ namespace Badmin.Areas.Admin.Controllers
     public class ListController : BadminBaseController
     {
 
+        
+
         public ListController(IBadmin badmin) : base(badmin)
         {
         }
@@ -16,17 +18,23 @@ namespace Badmin.Areas.Admin.Controllers
         //
         // GET: /Admin/List/
 
-        public ActionResult Index(string type, int page =1)
+        public ActionResult Index(string type, int page = 1)
         {
+         
             const int PageSize = 2;
 
-            var dataConfig = badmin.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
+            var config = badmin.GetDataConfigurationForType<dynamic>(type);
 
-            var property = dataConfig.Data.ToPagedList(page, PageSize);
+            var dataContext = Badmin.CreateDataCotext(config);
+
+            var set = dataContext.Set(config.Data.ElementType);
+
+            
+            
+            var list = set.Cast<object>().ToPagedList(page, PageSize);
 
 
-
-            return View(property);
+            return View(list);
         }
 
         public ActionResult Edit(string type, int id)
@@ -37,7 +45,7 @@ namespace Badmin.Areas.Admin.Controllers
 
             var dataContext = Badmin.CreateDataCotext(data);
 
-            var item = dataContext.Set(data.DataType).Find(id);
+            var item = dataContext.Set(data.Data.ElementType).Find(id);
             
             return View(item);
         }
@@ -48,11 +56,12 @@ namespace Badmin.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View();
 
+            //blargh
             var data = badmin.Configurations.Single(x => x.Name.ToUpper() == type.ToUpper());
 
             var dataContext = Badmin.CreateDataCotext(data);
             
-            var item = dataContext.Set(data.DataType).Find(id) as dynamic;
+            var item = dataContext.Set(data.Data.ElementType).Find(id) as dynamic;
             
             UpdateModel(item);
 
