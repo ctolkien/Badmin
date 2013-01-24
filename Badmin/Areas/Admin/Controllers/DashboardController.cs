@@ -22,7 +22,7 @@ namespace Badmin.Areas.Admin.Controllers
         public ActionResult Index()
         {
 
-            var model = badmin.DataConfigurations.Where(x => x.VisibleInMenu);
+            var model = badmin.Configurations.Where(x => x.VisibleInMenu);
 
             return View(model.Select(x => x.Name));
         }

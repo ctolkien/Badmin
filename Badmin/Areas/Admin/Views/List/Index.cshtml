@@ -6,7 +6,7 @@
 @model IEnumerable<object>
 
 
-<h2>Index</h2>
+<h2>Row Listing</h2>
 
 <table class="table table-striped">
     <caption></caption>
@@ -57,3 +57,5 @@
     }
 
 </table>
+
+@Html.Pager((int)ViewBag.CurrentPage, (int)ViewBag.TotalPages, x => Url.Action("index", new { id = "Forum", page =x}))

@@ -5,15 +5,17 @@ using System.Linq;
 
 namespace Badmin
 {
+
+
     public class Badmin : IBadmin
     {
 
         public Badmin()
         {
-            DataConfigurations = new List<DataConfiguration<object>>();
+            Configurations = new List<DataConfiguration<object>>();
         }
 
-        public ICollection<DataConfiguration<object>> DataConfigurations { get; private set; }
+        public ICollection<DataConfiguration<object>> Configurations { get; private set; }
 
         public DataConfiguration<object> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
             where TResult : class
@@ -24,16 +26,16 @@ namespace Badmin
 
             var invokedData = data.Invoke(dataContext);
 
-
             var dataConfiguration = new DataConfiguration<object>
             {
                 Data = invokedData,
-                Name = GetTypeName(invokedData.ElementType.FullName),
+                Name = GetTypeName(invokedData.ElementType.FullName)
                 
             };
 
 
-            DataConfigurations.Add(dataConfiguration);
+
+            Configurations.Add(dataConfiguration);
 
             return dataConfiguration;
 

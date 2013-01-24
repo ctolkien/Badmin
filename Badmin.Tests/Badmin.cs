@@ -48,10 +48,10 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            Assert.Equal(1, badmin.DataConfigurations.Count);
+            Assert.Equal(1, badmin.Configurations.Count);
             
 
-            var first = badmin.DataConfigurations.First();
+            var first = badmin.Configurations.First();
             Assert.IsType(typeof(DbSet<Dummy>), first.Data);
         }
 
@@ -63,7 +63,7 @@ namespace Badmin.Tests
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            Assert.Equal(2, badmin.DataConfigurations.Count);
+            Assert.Equal(2, badmin.Configurations.Count);
         }
 
 
@@ -75,7 +75,7 @@ namespace Badmin.Tests
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies)
                 .Name("SampleName");
 
-            Assert.Equal("SampleName", badmin.DataConfigurations.First().Name);
+            Assert.Equal("SampleName", badmin.Configurations.First().Name);
 
         }
         [Fact]
@@ -86,8 +86,8 @@ namespace Badmin.Tests
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies).Name("Number 1");
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies).Name("Number 2");
 
-            Assert.Equal("Number 1", badmin.DataConfigurations.First().Name);
-            Assert.Equal("Number 2", badmin.DataConfigurations.Last().Name);
+            Assert.Equal("Number 1", badmin.Configurations.First().Name);
+            Assert.Equal("Number 2", badmin.Configurations.Last().Name);
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies).Name("Sample").VisibleInMenu(false);
 
-            Assert.False(badmin.DataConfigurations.First().VisibleInMenu);
+            Assert.False(badmin.Configurations.First().VisibleInMenu);
 
         }
 
@@ -108,7 +108,7 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies).Name("Sample");
 
-            Assert.True(badmin.DataConfigurations.First().VisibleInMenu);
+            Assert.True(badmin.Configurations.First().VisibleInMenu);
 
         }
 
@@ -119,7 +119,7 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            Assert.Equal("Dummy", badmin.DataConfigurations.First().Name);
+            Assert.Equal("Dummy", badmin.Configurations.First().Name);
         }
 
         //This causes EF to choke...
@@ -130,7 +130,7 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            var dataConfiguration = badmin.DataConfigurations.Single(x => x.Name == "Dummy");
+            var dataConfiguration = badmin.Configurations.Single(x => x.Name == "Dummy");
 
 
             Assert.Equal(1, dataConfiguration.Data.Cast<object>().Count());

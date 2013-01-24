@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
@@ -17,25 +18,17 @@ namespace Badmin.Areas.Admin.Controllers
 
         public ActionResult Index(string id, int page =1)
         {
-
-            var dataConfig = badmin.DataConfigurations.SingleOrDefault(x => x.Name == id);
-
             const int PageSize = 2;
 
-            int skip = ((page - 1) * PageSize);
+            var dataConfig = badmin.Configurations.SingleOrDefault(x => x.Name == id);
 
-            
-            //hack: code is broken here...
+            var totalCount = dataConfig.Data.Count();
 
-            IQueryable<object> orderedData = dataConfig.Data;
+            var property = dataConfig.Data.ToPagedList(page, PageSize).ToList();
 
-            //can't cast it to IHasId
-            //it's all goen to hell...
-            var property = orderedData
-                .OrderBy(x => x)
-                .Skip(skip).Take(PageSize)
-                .ToList();
-    
+
+            ViewBag.CurrentPage = page -1;
+            ViewBag.TotalPages = (totalCount / PageSize);
 
             return View(property);
         }

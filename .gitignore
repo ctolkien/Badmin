@@ -16,6 +16,9 @@ local.properties
 .settings/
 .loadpath
 
+*.mdf
+*.ldf
+
 # External tool builders
 .externalToolBuilders/
 
@@ -76,6 +79,9 @@ ipch/
 *.ncb
 *.opensdf
 *.sdf
+
+.JustCode/
+*ncrunchsolution*
 
 # Visual Studio profiler
 *.psess
