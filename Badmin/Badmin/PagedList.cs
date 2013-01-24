@@ -22,7 +22,7 @@ namespace Badmin
 
     public class PagedList<T> : List<T>, IPagedList<T>
     {
-        public PagedList(IEnumerable<T> source, int pageIndex, int pageSize) :
+        public PagedList(IQueryable<T> source, int pageIndex, int pageSize) :
             this(source.GetPage(pageIndex, pageSize), pageIndex, pageSize, source.Count()) { }
 
         public PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int totalCount)

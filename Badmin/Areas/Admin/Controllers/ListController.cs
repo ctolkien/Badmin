@@ -38,7 +38,7 @@ namespace Badmin.Areas.Admin.Controllers
                 objectlist.Add(item);
             }
 
-            var list = objectlist.ToPagedList(page, PageSize);
+            var list = objectlist.AsQueryable().ToPagedList(page, PageSize);
 
 
             return View(list);

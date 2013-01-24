@@ -80,12 +80,12 @@ namespace Badmin
 
     public static class PagingExtensions
     {
-        public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> query, int page, int pageSize)
+        public static IPagedList<T> ToPagedList<T>(this IQueryable<T> query, int page, int pageSize)
         {
             return new PagedList<T>(query, page - 1, pageSize);
         }
 
-        public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
+        public static IEnumerable<T> GetPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
         {
             return source.Skip(pageIndex * pageSize).Take(pageSize);
         }
