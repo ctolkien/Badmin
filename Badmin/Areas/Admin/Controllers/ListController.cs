@@ -32,6 +32,7 @@ namespace Badmin.Areas.Admin.Controllers
             
             //kill me now..
             //this pulls all the data back, is not paging appropriately...
+            //need some way to convert a DbSet, to a DbSet<T>
             var objectlist = new List<object>();
             foreach (var item in set)
             {
