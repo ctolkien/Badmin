@@ -24,9 +24,9 @@ namespace Badmin.Areas.Admin.Controllers
          
             const int PageSize = 2;
 
-            var config = badmin.GetDataConfigurationForType<dynamic>(type);
+            var config = badmin.GetDataConfiguration(type);
 
-            var dataContext = Badmin.CreateDataCotext(config);
+            var dataContext = badmin.CreateDataContext(type);
 
             var set = dataContext.Set(config.Data.ElementType);
             
@@ -49,9 +49,9 @@ namespace Badmin.Areas.Admin.Controllers
         {
 
             //ugly, fix trhis
-            var data = badmin.Configurations.Single(x => x.Name.ToUpper() == type.ToUpper());
+            var data = badmin.GetDataConfiguration(type);
 
-            var dataContext = Badmin.CreateDataCotext(data);
+            var dataContext = Badmin.CreateDataContext(data);
 
             var item = dataContext.Set(data.Data.ElementType).Find(id);
             
@@ -65,9 +65,9 @@ namespace Badmin.Areas.Admin.Controllers
                 return View();
 
             //blargh
-            var data = badmin.Configurations.Single(x => x.Name.ToUpper() == type.ToUpper());
+            var data = badmin.GetDataConfiguration(type);
 
-            var dataContext = Badmin.CreateDataCotext(data);
+            var dataContext = Badmin.CreateDataContext(data);
             
             var item = dataContext.Set(data.Data.ElementType).Find(id) as dynamic;
             

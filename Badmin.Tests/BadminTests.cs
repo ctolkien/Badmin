@@ -122,6 +122,20 @@ namespace Badmin.Tests
             Assert.Equal("Dummy", badmin.Configurations.First().Name);
         }
 
+        [Fact]
+        public void BadminCanCreateDataContextBasedOnStringOfType()
+        {
+            var badmin = CreateBadmin();
+
+            badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
+
+            var dataContext = badmin.CreateDataContext("Dummy");
+
+            Assert.IsType<DatabaseDummyContext>(dataContext);
+
+        }
+
+
         //This causes EF to choke...
         public void BadminCanReturnDataOutOfDataCollections()
         {

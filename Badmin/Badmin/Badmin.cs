@@ -16,15 +16,25 @@ namespace Badmin
         }
 
 
-        public static DbContext CreateDataCotext<T>(DataConfiguration<T> dataConfig)
+        public static DbContext CreateDataContext<T>(DataConfiguration<T> dataConfig)
         {
             return dataConfig.DataContextType.GetConstructor(System.Type.EmptyTypes).Invoke(null) as DbContext;
         }
 
-        public DataConfiguration<object> GetDataConfigurationForType<TType>(string type) where TType: class
+        public DbContext CreateDataContext(string type)
+        {
+            var dataConfig = this.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
+            return Badmin.CreateDataContext(dataConfig);
+        }
+
+        public DataConfiguration<object> GetDataConfiguration<TType>(string type) where TType: class
         {
             return this.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
+        }
 
+        public DataConfiguration<object> GetDataConfiguration(string type)
+        {
+            return this.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
         }
 
         public ICollection<DataConfiguration<object>> Configurations { get; private set; }
@@ -61,6 +71,9 @@ namespace Badmin
             return dataContext as T;
 
         }
+
+
+
 
 
     }
