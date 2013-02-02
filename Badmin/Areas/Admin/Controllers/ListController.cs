@@ -80,5 +80,16 @@ namespace Badmin.Areas.Admin.Controllers
 
         }
 
+        public ActionResult Details(string type, int id)
+        {
+            var data = badmin.GetDataConfiguration(type);
+
+            var dataContext = Badmin.CreateDataContext(data);
+
+            var item = dataContext.Set(data.Data.ElementType).Find(id) as dynamic;
+
+            return View(item);
+        }
+
     }
 }

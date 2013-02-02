@@ -1,0 +1,19 @@
+﻿@model System.Collections.Generic.IEnumerable<object>
+
+
+
+
+@{
+    
+    if (Model == null || Model.Count() == 0) {
+        @:No Items   
+    }
+    else {
+        @Html.ActionLink("View", "details")        
+    }
+    
+    
+}
+
+
+

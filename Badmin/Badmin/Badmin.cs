@@ -23,6 +23,7 @@ namespace Badmin
 
         public DbContext CreateDataContext(string type)
         {
+            //hack: kill me now...
             var dataConfig = this.Configurations.SingleOrDefault(x => x.Name.ToUpper() == type.ToUpper());
             return Badmin.CreateDataContext(dataConfig);
         }

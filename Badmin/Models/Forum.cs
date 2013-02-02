@@ -12,7 +12,7 @@ namespace Badmin.Models
         [Key, HiddenInput]
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public ICollection<Thread> Threads { get; set; }
 
     }
 
