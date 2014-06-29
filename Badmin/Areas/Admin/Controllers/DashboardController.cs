@@ -1,10 +1,4 @@
-﻿using Badmin;
-using Badmin.Models.Data;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 namespace Badmin.Areas.Admin.Controllers

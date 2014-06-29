@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
 
 namespace Badmin.Areas.Admin.Controllers
 {
     public class ListController : BadminBaseController
     {
-
-        
-
         public ListController(IBadmin badmin) : base(badmin)
         {
         }
@@ -22,7 +16,7 @@ namespace Badmin.Areas.Admin.Controllers
         public ActionResult Index(string type, int page = 1)
         {
          
-            const int PageSize = 2;
+            const int pageSize = 2;
 
             var config = badmin.GetDataConfiguration(type);
 
@@ -33,13 +27,15 @@ namespace Badmin.Areas.Admin.Controllers
             //kill me now..
             //this pulls all the data back, is not paging appropriately...
             //need some way to convert a DbSet, to a DbSet<T>
+            //note can use reflection and 'make generic type'
+            
             var objectlist = new List<object>();
             foreach (var item in set)
             {
                 objectlist.Add(item);
             }
 
-            var list = objectlist.AsQueryable().ToPagedList(page, PageSize);
+            var list = objectlist.AsQueryable().ToPagedList(page, pageSize);
 
 
             return View(list);
@@ -59,6 +55,7 @@ namespace Badmin.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(string type, int id, FormCollection forms)
         {
             if (!ModelState.IsValid)
