@@ -1,34 +1,41 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 
 namespace Badmin.Areas.Admin.Controllers
 {
-    public class ListController : BadminBaseController
+    public class ListController : BadminBaseController 
     {
+        
+
         public ListController(IBadmin badmin) : base(badmin)
         {
         }
 
-        //
         // GET: /Admin/List/
         public ActionResult Index(string type, int page = 1)
         {
          
             const int pageSize = 3;
 
-            var config = badmin.GetDataConfiguration(type); //we get a data config, based on the 'type' string
-
+            
             var dataContext = badmin.CreateDataContext(type); // create a datacontext for this particlar type.
 
+
+            var config = badmin.GetDataConfiguration(type); //we get a data config, based on the 'type' string
             var dbSet = dataContext.Set(config.ElementType); //create a dbSet, would _really_ prefer DbSet<T>
 
             //because dbSet is IQueryable (non, generic),  I don't have access to skip/take, etc. ext. methods.
-            
+
+            var iterateAllTheThings = new List<object>();
+            foreach (var item in dbSet)
+            {
+                iterateAllTheThings.Add(item);
+            }
+
             //hence the below fails..
-            var list = dbSet.ToPagedList(page, pageSize);
+            var list = iterateAllTheThings.AsQueryable().ToPagedList(page, pageSize);
 
 
             return View(list);

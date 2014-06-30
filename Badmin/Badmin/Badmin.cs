@@ -13,7 +13,7 @@ namespace Badmin
         public static DbContext CreateDataContext(DataConfiguration dataConfig)
         {
             if (dataConfig == null) throw new ArgumentNullException("dataConfig");
-            return dataConfig.ElementType.GetConstructor(Type.EmptyTypes).Invoke(null) as DbContext;
+            return dataConfig.DbContextType.GetConstructor(Type.EmptyTypes).Invoke(null) as DbContext;
         }
 
         public DbContext CreateDataContext(string type)
@@ -51,7 +51,8 @@ namespace Badmin
             var dataConfiguration = new DataConfiguration
             {
                 Name = typeof(TResult).Name,
-                ElementType = typeof(T)
+                ElementType = typeof(TResult),
+                DbContextType = typeof(T)
             };
 
             Configurations.Add(dataConfiguration);

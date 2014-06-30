@@ -22,6 +22,7 @@ namespace Badmin
 
             System.Data.Entity.Database.SetInitializer(new DatabaseInit());
 
+
         }
 
         #region Miniprofiler

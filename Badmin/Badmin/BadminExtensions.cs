@@ -14,24 +14,16 @@ namespace Badmin
 {
     public static class BadminExtensions
     {
-        public static DataConfiguration Name<T>(this DataConfiguration config, string name) 
+        public static DataConfiguration Name(this DataConfiguration config, string name) 
         {
             config.Name = name;
             return config;
         }
 
-        public static DataConfiguration VisibleInMenu<T>(this DataConfiguration config, bool visibleInMenu) 
+        public static DataConfiguration VisibleInMenu(this DataConfiguration config, bool visibleInMenu) 
         {
             config.VisibleInMenu = visibleInMenu;
             return config;
-        }
-    }
-
-    public static class DbSetExtensions
-    {
-        public static IQueryable AsGenericQueryable(this IQueryable query, Type type) 
-        {
-            
         }
     }
 

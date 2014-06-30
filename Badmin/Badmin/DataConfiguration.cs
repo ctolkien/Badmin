@@ -14,6 +14,7 @@ namespace Badmin
         public bool VisibleInMenu { get; set; }
 
         public Type ElementType { get; set; }
+        public Type DbContextType { get; set; }
 
         
     }
