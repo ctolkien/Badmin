@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace Badmin.Areas.Admin.Controllers
@@ -12,35 +14,27 @@ namespace Badmin.Areas.Admin.Controllers
 
         //
         // GET: /Admin/List/
-
         public ActionResult Index(string type, int page = 1)
         {
          
             const int pageSize = 3;
 
-            var config = badmin.GetDataConfiguration(type);
+            var config = badmin.GetDataConfiguration(type); //we get a data config, based on the 'type' string
 
-            var dataContext = badmin.CreateDataContext(type);
+            var dataContext = badmin.CreateDataContext(type); // create a datacontext for this particlar type.
 
-            var set = dataContext.Set(config.Data.ElementType);
+            var dbSet = dataContext.Set(config.ElementType); //create a dbSet, would _really_ prefer DbSet<T>
+
+            //because dbSet is IQueryable (non, generic),  I don't have access to skip/take, etc. ext. methods.
             
-            //kill me now..
-            //this pulls all the data back, is not paging appropriately...
-            //need some way to convert a DbSet, to a DbSet<T>
-            //note can use reflection and 'make generic type'
-            
-            var objectlist = new List<object>();
-            foreach (var item in set)
-            {
-                objectlist.Add(item);
-            }
-
-            var list = objectlist.AsQueryable().ToPagedList(page, pageSize);
+            //hence the below fails..
+            var list = dbSet.ToPagedList(page, pageSize);
 
 
             return View(list);
         }
 
+      
         public ActionResult Edit(string type, int id)
         {
 
@@ -49,7 +43,7 @@ namespace Badmin.Areas.Admin.Controllers
 
             var dataContext = Badmin.CreateDataContext(data);
 
-            var item = dataContext.Set(data.Data.ElementType).Find(id);
+            var item = dataContext.Set(data.ElementType).Find(id);
             
             return View(item);
         }
@@ -66,7 +60,7 @@ namespace Badmin.Areas.Admin.Controllers
 
             var dataContext = Badmin.CreateDataContext(data);
             
-            var item = dataContext.Set(data.Data.ElementType).Find(id) as dynamic;
+            var item = dataContext.Set(data.ElementType).Find(id) as dynamic;
             
             UpdateModel(item);
 
@@ -83,7 +77,7 @@ namespace Badmin.Areas.Admin.Controllers
 
             var dataContext = Badmin.CreateDataContext(data);
 
-            var item = dataContext.Set(data.Data.ElementType).Find(id) as dynamic;
+            var item = dataContext.Set(data.ElementType).Find(id) as dynamic;
 
             return View(item);
         }
