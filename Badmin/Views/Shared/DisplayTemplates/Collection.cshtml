@@ -1,19 +1,17 @@
-﻿@model System.Collections.Generic.IEnumerable<object>
-
-
-
-
+﻿@model System.Collections.IEnumerable
 @{
-    
-    if (Model == null || Model.Count() == 0) {
-        @:No Items   
-    }
-    else {
-        @Html.ActionLink("View", "details")        
-    }
-    
-    
+	var index = 0;
+	var prefix = Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix;
 }
-
-
-
+@try
+{
+	foreach (var item in Model)
+	{
+		Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix = prefix + "_" + index++ + "_";
+		@Html.DisplayFor(m => item, null, "")
+	}
+}
+finally
+{
+	Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix = prefix;
+}
