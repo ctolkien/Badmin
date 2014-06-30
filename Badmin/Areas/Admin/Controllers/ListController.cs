@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -24,7 +25,7 @@ namespace Badmin.Areas.Admin.Controllers
             public IPagedList Index(int page = 1, int pageSize = 25)
             {
                 return _ctx.Set<T>()
-                    .OrderBy(x => x)
+                    .OrderBy(x => Guid.NewGuid())
                     .ToPagedList(page, pageSize);
             }
         }
