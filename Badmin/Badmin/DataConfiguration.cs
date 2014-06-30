@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Badmin
 {
-    public class DataConfiguration<T>
+    public class DataConfiguration<T> 
     {
         public DataConfiguration()
         {
@@ -20,5 +20,23 @@ namespace Badmin
         public Type DataContextType { get; set; }
 
         
+    }
+
+    public class DataConfiguration
+    {
+        public DataConfiguration()
+        {
+            VisibleInMenu = true;
+        }
+
+        public string Name { get; set; }
+
+        public bool VisibleInMenu { get; set; }
+
+        public IQueryable Data { get; set; }
+
+        public Type DataContextType { get; set; }
+
+
     }
 }

@@ -1,7 +1,6 @@
 using System.Web.Mvc;
 using Munq.MVC3;
 using Badmin.Models.Data;
-using Badmin;
 using Munq.LifetimeManagers;
 using Badmin.Models;
 
@@ -11,6 +10,7 @@ using Badmin.Models;
 namespace Badmin.App_Start {
 	public static class MunqMvc3Startup {
 		public static void PreStart() {
+
 			DependencyResolver.SetResolver(new MunqDependencyResolver());
 
 			var ioc = MunqDependencyResolver.Container;

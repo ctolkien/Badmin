@@ -29,7 +29,7 @@ namespace Badmin.Tests
         public void BadminCanRegisterADataSource()
         {
             var badmin = CreateBadmin();
-            Assert.IsType<DatabaseDummyContext>(badmin.CreateDataContextType<DatabaseDummyContext>());
+            Assert.IsType<DatabaseDummyContext>(badmin.CreateDataContextForType<DatabaseDummyContext>());
 
         }
 
@@ -41,7 +41,7 @@ namespace Badmin.Tests
 
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            Assert.Equal(1, badmin.Configurations.Count);
+            Assert.Equal(1, badmin.Configurations.Count());
             
 
             var first = badmin.Configurations.First();
@@ -56,7 +56,7 @@ namespace Badmin.Tests
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
             badmin.Register<DatabaseDummyContext, Dummy>(x => x.Dummies);
 
-            Assert.Equal(2, badmin.Configurations.Count);
+            Assert.Equal(2, badmin.Configurations.Count());
         }
 
 
