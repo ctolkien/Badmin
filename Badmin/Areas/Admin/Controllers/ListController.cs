@@ -13,30 +13,46 @@ namespace Badmin.Areas.Admin.Controllers
         {
         }
 
+        public class ListThingy<T> where T : class
+        {
+            private readonly DbContext _ctx;
+            public ListThingy(DbContext ctx)
+            {
+                _ctx = ctx;
+            }
+
+            public IPagedList Index(int page = 1, int pageSize = 25)
+            {
+                return _ctx.Set<T>()
+                    .OrderBy(x => x)
+                    .ToPagedList(page, pageSize);
+            }
+        }
+
         // GET: /Admin/List/
         public ActionResult Index(string type, int page = 1)
         {
          
             const int pageSize = 3;
 
-            
-            var dataContext = badmin.CreateDataContext(type); // create a datacontext for this particlar type.
-
+            var dataContext = badmin.CreateDataContext(type);
 
             var config = badmin.GetDataConfiguration(type); //we get a data config, based on the 'type' string
+
+            var t = typeof(ListThingy<>);
+            var gt = t.MakeGenericType(new[] { config.ElementType });
+            var ctor = gt.GetConstructor(new[] { config.DbContextType });
+            dynamic obj = ctor.Invoke(new[] { dataContext });
+
+            
             var dbSet = dataContext.Set(config.ElementType); //create a dbSet, would _really_ prefer DbSet<T>
 
             //because dbSet is IQueryable (non, generic),  I don't have access to skip/take, etc. ext. methods.
 
-            var iterateAllTheThings = new List<object>();
-            foreach (var item in dbSet)
-            {
-                iterateAllTheThings.Add(item);
-            }
-
             //hence the below fails..
-            var list = iterateAllTheThings.AsQueryable().ToPagedList(page, pageSize);
+            //var list = obj.ToPagedList(page, pageSize);
 
+            var list = obj.Index();
 
             return View(list);
         }
