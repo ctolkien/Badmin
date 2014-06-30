@@ -10,9 +10,9 @@ namespace Badmin
     public class Badmin : IBadmin
     {
 
-        
         public static DbContext CreateDataContext<T>(DataConfiguration<T> dataConfig)
         {
+            if (dataConfig == null) throw new ArgumentNullException("dataConfig");
             return dataConfig.DataContextType.GetConstructor(Type.EmptyTypes).Invoke(null) as DbContext;
         }
 
@@ -34,20 +34,18 @@ namespace Badmin
         }
 
         //TODO think this should be be made non-generic, or changed to 'type'
-        public ICollection<DataConfiguration<object>> Configurations { get; private set; }
+        public ICollection<DataConfiguration<dynamic>> Configurations { get; private set; }
 
-        public DataConfiguration<TResult> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
+        public DataConfiguration<dynamic> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
             where TResult : class
             where T : DbContext
         {
-
+            //what the hell is all this shit... needs to be changed....
             var dataContext = CreateDataContextForType<T>();
             
-            var invokedData = data.Invoke(dataContext);
-
-            var dataConfiguration = new DataConfiguration<TResult>
+            var dataConfiguration = new DataConfiguration<dynamic>
             {
-                Data = invokedData,
+                Data = data.Invoke(dataContext),
                 Name = typeof(TResult).Name,
                 DataContextType = typeof(T)
                 
@@ -55,7 +53,7 @@ namespace Badmin
 
             if (Configurations == null)
             {
-                Configurations = new Collection<DataConfiguration<TResult>>();
+                Configurations = new Collection<DataConfiguration<dynamic>>();
             }
 
             Configurations.Add(dataConfiguration);

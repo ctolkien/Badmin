@@ -1,16 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badmin", "Badmin\Badmin.csproj", "{95950FA8-65A7-46D9-B15A-3B2907F07701}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0F66650A-6FC7-45E7-BE44-407BFD8DEB41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badmin.Tests", "Badmin.Tests\Badmin.Tests.csproj", "{78B08418-DF43-4A8B-B7D7-1D408F540CB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{951BBE88-C4F1-4078-9AAE-8A06F2F0F153}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badmin.Tests", "Badmin.Tests\Badmin.Tests.csproj", "{78B08418-DF43-4A8B-B7D7-1D408F540CB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

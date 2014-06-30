@@ -10,14 +10,14 @@ namespace Badmin
     {
         T CreateDataContextForType<T>() where T: class;
 
-        ICollection<DataConfiguration<object>> Configurations { get; }
+        ICollection<DataConfiguration<dynamic>> Configurations { get; }
 
-        DataConfiguration<TResult> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
+        DataConfiguration<dynamic> Register<T, TResult>(Func<T, IQueryable<TResult>> data)
             where TResult : class
             where T : DbContext;
 
-        DataConfiguration<object> GetDataConfiguration<TType>(string type) where TType: class;
-        DataConfiguration<object> GetDataConfiguration(string type);
+        DataConfiguration<dynamic> GetDataConfiguration<TType>(string type) where TType: class;
+        DataConfiguration<dynamic> GetDataConfiguration(string type);
 
         DbContext CreateDataContext(string type);
 

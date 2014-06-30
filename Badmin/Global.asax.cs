@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 
 namespace Badmin
 {
@@ -21,6 +23,25 @@ namespace Badmin
             System.Data.Entity.Database.SetInitializer(new DatabaseInit());
 
         }
+
+        #region Miniprofiler
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Start();
+                //MiniProfilerEF6.Initialize(); can't get this to work..
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            MiniProfiler.Stop();
+        }
+
+        #endregion
+
     }
 
     public class DatabaseInit : System.Data.Entity.DropCreateDatabaseIfModelChanges<Models.Data.DatabaseContext>

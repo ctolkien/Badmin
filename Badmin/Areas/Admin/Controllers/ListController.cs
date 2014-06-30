@@ -16,7 +16,7 @@ namespace Badmin.Areas.Admin.Controllers
         public ActionResult Index(string type, int page = 1)
         {
          
-            const int pageSize = 2;
+            const int pageSize = 3;
 
             var config = badmin.GetDataConfiguration(type);
 
