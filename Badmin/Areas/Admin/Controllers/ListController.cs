@@ -40,22 +40,35 @@ namespace Badmin.Areas.Admin.Controllers
 
             var config = badmin.GetDataConfiguration(type); //we get a data config, based on the 'type' string
 
-            var t = typeof(ListThingy<>);
-            var gt = t.MakeGenericType(new[] { config.ElementType });
-            var ctor = gt.GetConstructor(new[] { config.DbContextType });
-            dynamic obj = ctor.Invoke(new[] { dataContext });
+
+            var methods = typeof(DbContext).GetMethods();
+
+            var method = methods.First(x => x.Name == "Set");
+
+            var genericMethod = method.MakeGenericMethod(new[] { config.ElementType });
+
+            //var invokedMethod = genericMethod.Invoke(null, );
+
+            var result = typeof (PagingExtensions)
+                .GetMethod("ToPagedList")
+                .Invoke(null, new object[] { genericMethod, page, pageSize });
+
+            //var t = typeof(ListThingy<>);
+            //var gt = t.MakeGenericType(new[] { config.ElementType });
+            //var ctor = gt.GetConstructor(new[] { config.DbContextType });
+            //dynamic obj = ctor.Invoke(new[] { dataContext });
 
             
-            var dbSet = dataContext.Set(config.ElementType); //create a dbSet, would _really_ prefer DbSet<T>
+            //var dbSet = dataContext.Set(config.ElementType); //create a dbSet, would _really_ prefer DbSet<T>
 
             //because dbSet is IQueryable (non, generic),  I don't have access to skip/take, etc. ext. methods.
 
             //hence the below fails..
             //var list = obj.ToPagedList(page, pageSize);
 
-            var list = obj.Index();
+            
 
-            return View(list);
+            return View(result);
         }
 
       
